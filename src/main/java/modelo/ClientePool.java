@@ -19,7 +19,7 @@ import dto.ClienteEntidad;
 
 public class ClientePool {
 
-	//@Resource(name = "jdbc/Productos")
+	@Resource(name = "jdbc/Productos")
 	private DataSource mipool;
 
 	public Connection ClientePool() {
@@ -63,12 +63,7 @@ public class ClientePool {
 		} catch (SQLException e) {
 			// TODO: handle exception
 		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
 		}
 		return listaPersonas;
 	}

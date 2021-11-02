@@ -13,31 +13,38 @@
 </head>
 <body>
 	<h1>lista clientes</h1>
-	<table style="width: 100%">
+	<table style="width: 100%; text-align: left;" border="1">
 		<tr>
 			<th>Id</th>
 			<th>Nombre</th>
 			<th>Edad</th>
-		</tr>
-		<tr>
-			<% ArrayList<ClienteEntidad> lista = (ArrayList<ClienteEntidad>) request.getAttribute("lista"); %>
-			
-			<td>Alfreds Futterkiste</td>
-			<td>Maria Anders</td>
-			<td>Germany</td>
+			<th>Editar</th>
 		</tr>
 
-		<% for (ClienteEntidad item : lista) {
-			
-   %>
-
+		<%
+		ArrayList<ClienteEntidad> lista = (ArrayList<ClienteEntidad>) request.getAttribute("lista");
+		for (ClienteEntidad item : lista) {
+		%>
 		<tr>
-			<td>Centro comercial Moctezuma</td>
-			<td>Francisco Chang</td>
-			<td>Mexico</td>
+			<td><%=item.getId()%></td>
+			<td><%=item.getNombre()%></td>
+			<td><%=item.getEdad()%></td>
+			<td>
+				<%
+				String url = request.getContextPath() + "/cliente/ver?id=" + item.getId();
+				
+				%>
+				<button>
+					<a href="<%=url%>">ver cliente</a>
+				</button>
+			</td>
 		</tr>
-	<% }  %>	
+		<%
+		}
+		%>
 	</table>
+	
+	<a href="${pageContext.request.contextPath}/cliente/crear">Crear Cliente</a>
 
 
 </body>

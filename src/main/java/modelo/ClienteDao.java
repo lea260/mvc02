@@ -1,19 +1,15 @@
 package modelo;
 
-import dto.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.function.IntToDoubleFunction;
-import modelo.*;
 
+import dto.ClienteEntidad;
 
-public class ClienteDao  {
+public class ClienteDao {
 
-	
 	public ArrayList<ClienteEntidad> obternerListaClientes() {
 		// TODO Auto-generated method stub
 		Connection con = Conexion.getConexion();
@@ -41,12 +37,11 @@ public class ClienteDao  {
 		return listaPersonas;
 	}
 
-	
 	public int agregarCliente(ClienteEntidad cli) {
 		// TODO Auto-generated method stub
 		Connection con = Conexion.getConexion();
 		int resultado = -1;
-		
+
 		try {
 			PreparedStatement ps = con.prepareStatement("insert into clientes (nombre, edad) values(?,?)",
 					PreparedStatement.RETURN_GENERATED_KEYS);
@@ -77,7 +72,6 @@ public class ClienteDao  {
 		return resultado;
 	}
 
-	
 	public boolean eliminarCliente(int id) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
@@ -100,7 +94,6 @@ public class ClienteDao  {
 		return true;
 	}
 
-	
 	public boolean editarCliente(ClienteEntidad cli) {
 		// TODO Auto-generated method stub
 		Connection con = Conexion.getConexion();
@@ -122,6 +115,34 @@ public class ClienteDao  {
 			}
 		}
 		return true;
+	}
+
+	public ClienteEntidad obtenerClienteId(int idInt) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		Connection con = Conexion.getConexion();
+		ClienteEntidad cliente = new ClienteEntidad();
+		try {
+			PreparedStatement ps = con.prepareStatement("select * from clientes where id=?");
+			ps.setInt(1, idInt);
+			ResultSet resultado = ps.executeQuery();
+			while (resultado.next()) {
+				int id = resultado.getInt("id");
+				String nombre = resultado.getString("nombre");
+				int edad = resultado.getInt("edad");
+				cliente = new ClienteEntidad(id, nombre, edad);
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return cliente;
 	}
 
 }

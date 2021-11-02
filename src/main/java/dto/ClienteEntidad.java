@@ -5,12 +5,16 @@ public class ClienteEntidad implements Comparable<ClienteEntidad> {
 	private String nombre;
 	private int edad;
 
+	public ClienteEntidad() {
+		this(0, "", 0);
+	}
+
 	public ClienteEntidad(int id, String nombre, int edad) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.edad = edad;
-	} 
+	}
 
 	public int getId() {
 		return id;
