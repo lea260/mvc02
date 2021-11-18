@@ -48,8 +48,8 @@ public class ServletPruebas extends HttpServlet {
 		Connection con = null;
 		ArrayList<ClienteEntidad> listaPersonas = new ArrayList<ClienteEntidad>();
 		try {
-			Connection miConnection = mipool.getConnection();
-			con = Conexion.getConexion();
+			con = mipool.getConnection();
+			//con = Conexion.getConexion();
 			PreparedStatement ps = con.prepareStatement("select * from clientes");
 			ResultSet resultado = ps.executeQuery();
 			while (resultado.next()) {

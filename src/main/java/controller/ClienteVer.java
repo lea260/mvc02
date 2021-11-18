@@ -37,9 +37,12 @@ public class ClienteVer extends HttpServlet {
 		try {
 			ClienteDao dao = new ClienteDao();
 			String idStr = request.getParameter("id");
+			String param = request.getParameter("param");
+			
 			int idInt = Integer.parseInt(idStr);
 			ClienteEntidad cliente = dao.obtenerClienteId(idInt);
 			request.setAttribute("cli", cliente);
+			request.setAttribute("clave", param);
 			RequestDispatcher rd = request.getRequestDispatcher("/clientever.jsp");
 			rd.forward(request, response);
 		} catch (Exception e) {

@@ -23,6 +23,7 @@
 			</tr>
 			<%
 			ClienteEntidad cliente = (ClienteEntidad) request.getAttribute("cli");
+			String param = (String) request.getAttribute("clave");
 			%>
 			<tr>
 				<td><input type="text" value="<%=cliente.getId()%>" name="id"></td>
@@ -41,6 +42,9 @@
 				<td><input type="submit" value="Modificar"></td>
 			</tr>
 		</table>
+
 	</form>
+	<p><%=param%>
+	</p>
 </body>
 </html>
