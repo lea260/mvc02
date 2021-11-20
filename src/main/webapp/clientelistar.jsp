@@ -23,6 +23,8 @@
 
 		<%
 		ArrayList<ClienteEntidad> lista = (ArrayList<ClienteEntidad>) request.getAttribute("lista");
+		HttpSession session02 = request.getSession();
+		String param02 = (String) session02.getAttribute("usuario");
 		for (ClienteEntidad item : lista) {
 		%>
 		<tr>
@@ -46,6 +48,10 @@
 	
 	<a href="${pageContext.request.contextPath}/cliente/crear">Crear Cliente</a>
 
+	<p>
+		Usuario:
+		<%=param02%>
+	</p>
 
 </body>
 </html>

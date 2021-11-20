@@ -19,38 +19,19 @@ import dto.ClienteEntidad;
 
 public class ClientePool {
 
-	@Resource(name = "jdbc/Productos")
 	private DataSource mipool;
 
-	public Connection ClientePool() {
+	public ClientePool(DataSource mipool) {
+		this.mipool = mipool;
 		// TODO Auto-generated constructor stub
-		Connection con=null;
-		try {
-			// Esta parte es fija
-			Context initCtx = new InitialContext();
-			Context envCtx = (Context) initCtx.lookup("java:comp/env");
-
-			// Y aquí pedimos nuestra conexión, por su nombre
-			DataSource ds = (DataSource) envCtx.lookup("jdbc/bdprog01");
-			con = ds.getConnection();
-
-			// Aquí la transacción con la base de datos
-
-			// Se cierra la conexión, ya que estamos en un pool de conexiones
-			// para dejarla libre a otros procesos.
-			//conexion.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return con;
 	}
 
 	public ArrayList<ClienteEntidad> obternerListaClientes() {
 		// TODO Auto-generated method stub
-		Connection con = this.ClientePool();
+		Connection con = null;
 		ArrayList<ClienteEntidad> listaPersonas = new ArrayList<ClienteEntidad>();
 		try {
+			con = mipool.getConnection();
 			PreparedStatement ps = con.prepareStatement("select * from clientes");
 			ResultSet resultado = ps.executeQuery();
 			while (resultado.next()) {
@@ -63,7 +44,7 @@ public class ClientePool {
 		} catch (SQLException e) {
 			// TODO: handle exception
 		} finally {
-		
+
 		}
 		return listaPersonas;
 	}

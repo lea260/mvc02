@@ -2,8 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -14,10 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import dto.ClienteEntidad;
-import modelo.Conexion;
+import modelo.ClientePool;
 
 /**
  * Servlet implementation class ServletPruebas
@@ -49,16 +48,11 @@ public class ServletPruebas extends HttpServlet {
 		ArrayList<ClienteEntidad> listaPersonas = new ArrayList<ClienteEntidad>();
 		try {
 			con = mipool.getConnection();
-			//con = Conexion.getConexion();
-			PreparedStatement ps = con.prepareStatement("select * from clientes");
-			ResultSet resultado = ps.executeQuery();
-			while (resultado.next()) {
-				int id = resultado.getInt("id");
-				String nombre = resultado.getString("nombre");
-				int edad = resultado.getInt("edad");
-				ClienteEntidad personaDao = new ClienteEntidad(id, nombre, edad);
-				listaPersonas.add(personaDao);
-			}
+			ClientePool cliPoll = new ClientePool(mipool);
+			listaPersonas= cliPoll.obternerListaClientes();
+			HttpSession session= request.getSession();
+			session.setAttribute("usuario", "Juan");
+			//con = Conexion.getConexion();			
 		} catch (SQLException e) {
 			// TODO: handle exception
 		} finally {

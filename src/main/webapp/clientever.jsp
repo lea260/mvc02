@@ -24,6 +24,8 @@
 			<%
 			ClienteEntidad cliente = (ClienteEntidad) request.getAttribute("cli");
 			String param = (String) request.getAttribute("clave");
+			HttpSession session02 = request.getSession();
+			String param02 = (String) session02.getAttribute("usuario");
 			%>
 			<tr>
 				<td><input type="text" value="<%=cliente.getId()%>" name="id"></td>
@@ -44,7 +46,9 @@
 		</table>
 
 	</form>
-	<p><%=param%>
+	<p>
+		Usuario:
+		<%=param02%>
 	</p>
 </body>
 </html>
